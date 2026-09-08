@@ -73,4 +73,4 @@ cd Trabalho-Engenharia-De-Sistemas-A
 
 ## 👥 Colaboradores
 - **Autora:** Rebeca Dias
-- **Professor:** Clique33 (Adicionado como colaborador com acesso total)
+- **Professor:** Clique33 
