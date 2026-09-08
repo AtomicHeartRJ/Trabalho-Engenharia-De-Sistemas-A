@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts"
+  },
+  "keywords": [],
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.5.0",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.3.0",
+    "fastify": "^5.12.3",
+    "tsx": "^4.23.13"
+  },
+  "allowScripts": {
+    "tsx@4.23.13": true,
+    "typescript@7.0.2": true,
+    "esbuild@0.28.2": true,
+    "fastify@5.12.3": true,
+    "@fastify/cors@11.3.0": true
+  }
+}
