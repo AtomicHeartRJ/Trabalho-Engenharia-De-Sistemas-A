@@ -71,27 +71,6 @@ cd Trabalho-Engenharia-De-Sistemas-A
 
 ---
 
-### 3. Configurando e Executando o Frontend
-
-1. Em um novo terminal, navegue até a pasta do frontend:
-   ```bash
-   cd frontend
-   ```
-
-2. Instale as dependências:
-   ```bash
-   npm install
-   ```
-
-3. Inicie a aplicação React com Vite:
-   ```bash
-   npm run dev
-   ```
-
-4. O terminal fornecerá um link local (geralmente `http://localhost:5173`). Abra-o em seu navegador para interagir com a aplicação.
-
----
-
 ## 👥 Colaboradores
 - **Autora:** Rebeca Dias
 - **Professor:** Clique33 (Adicionado como colaborador com acesso total)
