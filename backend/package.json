@@ -9,7 +9,9 @@
   "keywords": [],
   "type": "module",
   "devDependencies": {
+    "@prisma/client": "^5.22.0",
     "@types/node": "^26.5.0",
+    "prisma": "^5.22.0",
     "typescript": "^7.0.2"
   },
   "dependencies": {
@@ -22,6 +24,11 @@
     "typescript@7.0.2": true,
     "esbuild@0.28.2": true,
     "fastify@5.12.3": true,
-    "@fastify/cors@11.3.0": true
+    "@fastify/cors@11.3.0": true,
+    "msgpackr-extract@3.0.4": true,
+    "workerd@1.20260704.1": true,
+    "@prisma/client@5.22.0": true,
+    "@prisma/engines@5.22.0": true,
+    "prisma@5.22.0": true
   }
 }
