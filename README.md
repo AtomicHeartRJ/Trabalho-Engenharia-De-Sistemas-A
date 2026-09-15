@@ -69,6 +69,14 @@ cd Trabalho-Engenharia-De-Sistemas-A
    ```
    O servidor backend estará rodando na porta padrão (geralmente `http://localhost:3333` ou a configurada no Fastify).
    Testar no Insomnia (ou Postman)
+   Body do JSON:
+   {
+     "name": "Nome do Teste",
+     "email": "teste@email.com"
+   }
+
+
+   
 ---
 
 ## 👥 Colaboradores
