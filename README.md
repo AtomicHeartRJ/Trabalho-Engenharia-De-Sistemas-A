@@ -60,15 +60,15 @@ cd Trabalho-Engenharia-De-Sistemas-A
 
 4. Execute as migrações/configuração do Prisma:
    ```bash
-   npx prisma generate
+   npx prisma generate (ou, caso de erro: ./node_modules/.bin/prisma generate )
    ```
 
 5. Inicie o servidor em modo de desenvolvimento:
    ```bash
-   npm run dev
+   npm run dev  
    ```
    O servidor backend estará rodando na porta padrão (geralmente `http://localhost:3333` ou a configurada no Fastify).
-
+   Testar no Insomnia (ou Postman)
 ---
 
 ## 👥 Colaboradores
