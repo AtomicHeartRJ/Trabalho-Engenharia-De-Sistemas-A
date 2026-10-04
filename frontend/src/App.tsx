@@ -22,7 +22,7 @@ export default function app() {
                     <input 
                     type="submit" 
                     value="Cadastrar" 
-                    className="cursor-pointer w-full p-2 bg-green-500 rounded font-medium"
+                    className="cursor-pointer w-full p-2 bg-green-500 rounded font-medium" //mudar depois?
                     />
                 </form>
             
