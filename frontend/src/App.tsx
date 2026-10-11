@@ -1,5 +1,5 @@
 
-import {useEffect, useState, useRef} from 'react'
+import {useEffect, useState, useRef, type FormEvent} from 'react'
 import { FiTrash } from "react-icons/fi" 
 import { api } from "./services/api"
 
@@ -17,6 +17,8 @@ interface CustomerProps{
 export default function App() {
 
     const [customers, setCustomers] = useState<CustomerProps[]>([])
+    const nameRef = useRef<HTMLInputElement | null >(null)
+    const emailRef = useRef<HTMLInputElement | null >(null)
     
 
     useEffect(() => {
@@ -29,18 +31,57 @@ export default function App() {
     }
 
 
+  async function handleSubmit(event: FormEvent){
+        event.preventDefault();
+
+        if(!nameRef.current?.value || !emailRef.current?.value) return;
+        
+        await api.post("/customer", {
+            name: nameRef.current?.value,
+            email: emailRef.current?.value
+        })
+
+        loadCustomers();
+
+
+        nameRef.current.value = "";
+        emailRef.current.value = "";
+    }
+
+    async function handleDelete(id: string) {
+        try{
+            await api.delete("/customer", {
+                params:{
+                   id: id, 
+                }
+            })
+
+            const allCustomers = customers.filter( (customer) => customer.id !== id )
+            setCustomers(allCustomers)
+
+
+
+
+        } catch(err){
+            console.log(err);
+        }
+    }
+
+
+
 
     return (
         <div className="w-full min-h-screen bg-gray-900 flex justify-center px-4">
              <main className="my-10 w-full md:max-w-2x">
                 <h1 className="text-4x1 font-medium text-white">Clientes</h1>
               
-                <form className="flex flex-col my-6"> 
+                <form className="flex flex-col my-6" onSubmit={handleSubmit}> 
                     <label className="font-medium text-white">Name:</label>
                     <input
                         type="text"
                         placeholder="Digite seu nome completo..."
                         className="w-full mb-5 p-2 rounded"
+                        ref={nameRef}
 
                         />
                     <label className="font-medium text-white">Email:</label>
@@ -48,6 +89,7 @@ export default function App() {
                         type="text"
                         placeholder="Digite seu nome email..."
                         className="w-full mb-5 p-2 rounded"
+                        ref={emailRef}
 
                         />
                     <input 
@@ -69,7 +111,9 @@ export default function App() {
                             <p> <span className="font-medium ">Status: </span> {customer.status ? "ATIVO" : "INATIVO"} </p>
 
 
-                            <button className=" bg-red-500 w-7 h-7 flex items-center justify-center rounded-lg absolute right-0 -top-2"
+                            <button 
+                                className=" bg-red-500 w-7 h-7 flex items-center justify-center rounded-lg absolute right-0 -top-2"
+                                onClick={() => handleDelete(customer.id) }
                             > 
                             <FiTrash size={18} color="#FFF"/>
 
