@@ -1,5 +1,5 @@
 import {useEffect, useState, useRef, type FormEvent} from 'react'
-import { FiTrash, FiEdit } from "react-icons/fi" // 1. Adicionado o ícone de edição
+import { FiTrash, FiEdit } from "react-icons/fi" 
 import { api } from "./services/api"
 
 interface CustomerProps{
@@ -12,8 +12,10 @@ interface CustomerProps{
 
 export default function App() {
     const [customers, setCustomers] = useState<CustomerProps[]>([])
-    
     const [editingCustomer, setEditingCustomer] = useState<CustomerProps | null>(null) 
+    
+    
+    const [errors, setErrors] = useState({ name: false, email: false })
 
     const nameRef = useRef<HTMLInputElement | null >(null)
     const emailRef = useRef<HTMLInputElement | null >(null)
@@ -30,29 +32,38 @@ export default function App() {
     async function handleSubmit(event: FormEvent){
         event.preventDefault();
 
-        if(!nameRef.current?.value || !emailRef.current?.value) return;
         
-        if (editingCustomer) {
-            
-            await api.put("/customer", {
-                id: editingCustomer.id,
-                name: nameRef.current.value,
-                email: emailRef.current.value
-            });
-            
-            setEditingCustomer(null);
-        } else {
-            
-            await api.post("/customer", {
-                name: nameRef.current.value,
-                email: emailRef.current.value
-            })
+        const isNameEmpty = !nameRef.current?.value;
+        const isEmailEmpty = !emailRef.current?.value;
+
+       
+        if(isNameEmpty || isEmailEmpty) {
+            setErrors({ name: isNameEmpty, email: isEmailEmpty });
+            return;
         }
 
         
+        setErrors({ name: false, email: false });
+        
+        if (editingCustomer) {
+            await api.put("/customer", {
+                id: editingCustomer.id,
+                name: nameRef.current?.value,
+                email: emailRef.current?.value
+            });
+            setEditingCustomer(null);
+        } else {
+            await api.post("/customer", {
+                name: nameRef.current?.value,
+                email: emailRef.current?.value
+            })
+        }
+
         loadCustomers();
-        nameRef.current.value = "";
-        emailRef.current.value = "";
+        if(nameRef.current && emailRef.current) {
+            nameRef.current.value = "";
+            emailRef.current.value = "";
+        }
     }
 
     async function handleDelete(id: string) {
@@ -67,18 +78,19 @@ export default function App() {
         }
     }
 
-   
     function handleEdit(customer: CustomerProps) {
         if(nameRef.current && emailRef.current) {
             nameRef.current.value = customer.name;
             emailRef.current.value = customer.email;
             setEditingCustomer(customer);
+            
+            setErrors({ name: false, email: false });
         }
     }
 
-    
     function cancelEdit() {
         setEditingCustomer(null);
+        setErrors({ name: false, email: false });
         if(nameRef.current && emailRef.current) {
             nameRef.current.value = "";
             emailRef.current.value = "";
@@ -91,30 +103,34 @@ export default function App() {
                 <h1 className="text-4x1 font-medium text-white">Clientes</h1>
               
                 <form className="flex flex-col my-6" onSubmit={handleSubmit}> 
-                    <label className="font-medium text-white">Name:</label>
+                    <label className="font-medium text-white">Nome:</label>
                     <input
                         type="text"
                         placeholder="Digite seu nome completo..."
-                        className="w-full mb-5 p-2 rounded"
+                        
+                        className={`w-full p-2 rounded ${errors.name ? "border-2 border-red-500 mb-1" : "mb-5"}`}
                         ref={nameRef}
                     />
+                    
+                    {errors.name && <span className="text-red-500 text-sm mb-4">O campo Nome é obrigatório.</span>}
+
                     <label className="font-medium text-white">Email:</label>
                     <input
                         type="text"
-                        placeholder="Digite seu nome email..."
-                        className="w-full mb-5 p-2 rounded"
+                        placeholder="Digite seu email..."
+                        
+                        className={`w-full p-2 rounded ${errors.email ? "border-2 border-red-500 mb-1" : "mb-5"}`}
                         ref={emailRef}
                     />
                     
-                    <div className="flex gap-2">
+                    {errors.email && <span className="text-red-500 text-sm mb-4">O campo Email é obrigatório.</span>}
+                    
+                    <div className="flex gap-2 mt-2">
                         <input 
                             type="submit" 
-                            
                             value={editingCustomer ? "Atualizar Cliente" : "Cadastrar"} 
-                            
                             className={`cursor-pointer w-full p-2 rounded font-medium text-white ${editingCustomer ? "bg-blue-500" : "bg-green-500"}`} 
                         />
-                        
                         {editingCustomer && (
                             <button type="button" onClick={cancelEdit} className="w-1/3 bg-gray-500 text-white rounded font-medium">
                                 Cancelar
@@ -133,7 +149,6 @@ export default function App() {
                             <p> <span className="font-medium ">Email: </span> {customer.email} </p>
                             <p> <span className="font-medium ">Status: </span> {customer.status ? "ATIVO" : "INATIVO"} </p>
 
-                            
                             <button 
                                 className="bg-blue-500 w-7 h-7 flex items-center justify-center rounded-lg absolute right-10 -top-2"
                                 onClick={() => handleEdit(customer)}
