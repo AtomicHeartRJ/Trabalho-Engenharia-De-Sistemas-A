@@ -1,90 +1,87 @@
-# 🚀 API e Sistema de Gerenciamento de Clientes
+# 🚀 Sistema de Gerenciamento de Clientes (Full-Stack)
 
-Este repositório contém o projeto de uma aplicação completa de gerenciamento de clientes, estruturada em uma arquitetura de separação de responsabilidades (Backend em Node.js com Fastify e Prisma + Frontend em React com Vite e Tailwind CSS).
+Este repositório contém uma aplicação Full-Stack completa para o gerenciamento de clientes, estruturada com separação de responsabilidades entre Backend (Node.js/API) e Frontend (React/Interface). 
+
+O projeto inclui um sistema CRUD completo (Criar, Ler, Atualizar e Deletar) com atualizações em tempo real na interface e validações de usuário.
 
 ## 🛠️ Tecnologias Utilizadas
 
-### Backend
-- **Node.js** & **TypeScript**: Ambiente de execução e tipagem estática.
-- **Fastify**: Framework web rápido e de baixo overhead.
+### Backend (API)
+- **Node.js** & **TypeScript**: Ambiente de execução e tipagem.
+- **Fastify**: Framework web de alta performance.
 - **Prisma ORM**: Gerenciamento e comunicação com o banco de dados.
-- **MongoDB Atlas**: Banco de dados NoSQL hospedado na nuvem.
-- **CORS**: Habilitação de requisições seguras entre origens.
+- **MongoDB Atlas**: Banco de dados NoSQL na nuvem.
+- **CORS**: Configuração de segurança para comunicação entre origens.
 
-### Frontend
-- **React.js** (com **Vite**): Biblioteca para construção de interfaces e empacotamento rápido.
-- **Tailwind CSS**: Estilização utilitária e padronização dos componentes.
-- **Axios**: Cliente HTTP para comunicação e consumo da API.
-- **React Icons**: Biblioteca para renderização dos ícones visuais na interface.
+### Frontend (Interface Web)
+- **React.js** (com **Vite**): Biblioteca para construção da interface de usuário.
+- **Tailwind CSS**: Estilização ágil e responsiva.
+- **Axios**: Cliente HTTP para consumo da API.
+- **React Icons**: Biblioteca de ícones visuais (Lixeira, Lápis de edição).
 
 ---
 
 ## 📋 Pré-requisitos
 
-Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
-1. **Node.js** (versão 18 ou superior recomendada).
-2. **Git** para clonar o repositório.
-3. Uma conta e um cluster configurado no **MongoDB Atlas** (ou uma instância local do MongoDB).
+Para rodar este projeto na sua máquina, você precisará de:
+1. **Node.js** (versão 18 ou superior).
+2. **Git** instalado.
+3. Uma conta e um cluster configurado no **MongoDB Atlas** (ou MongoDB local) para a *Connection String*.
 
 ---
 
-## ⚙️ Passo a Passo para Instalação e Execução
+## ⚙️ Instalação e Configuração
 
-### 1. Clonando o Repositório
-Abra o seu terminal e execute o comando abaixo para clonar o projeto:
-
+### 1. Clonar o Repositório
+Abra o terminal e execute:
 ```bash
-
-
-git clone [https://github.com/AtomicHeartRJ/Trabalho-Engenharia-De-Sistemas-A.git](https://github.com/AtomicHeartRJ/Trabalho-Engenharia-De-Sistemas-A.git)
+git clone https://github.com/AtomicHeartRJ/Trabalho-Engenharia-De-Sistemas-A.git
 cd Trabalho-Engenharia-De-Sistemas-A
-2. Configurando e Executando o Backend
-Navegue até a pasta do backend (ou raiz, dependendo da estrutura do seu repositório):
+```
 
-Bash
+### 2. Configurando o Backend (Terminal 1)
+Abra um terminal, navegue até a pasta do backend e instale as dependências:
+```bash
 cd backend
-Instale as dependências do projeto:
-
-Bash
 npm install
-(Dica: Se estiver a executar num ambiente com restrições de script como o PowerShell, utilize npm.cmd install)
+```
 
-Configure as variáveis de ambiente:
-
-Crie um arquivo .env na raiz da pasta do backend.
-
-Adicione a string de conexão do seu MongoDB Atlas no seguinte formato:
-
-Snippet de código
+**Configuração do Banco de Dados:**
+Crie um arquivo chamado `.env` na raiz da pasta `backend` e adicione a sua string de conexão do MongoDB:
+```env
 DATABASE_URL="mongodb+srv://<usuario>:<senha>@<cluster>.mongodb.net/<nome_do_banco>?retryWrites=true&w=majority"
-Execute as migrações/configuração do Prisma:
+```
 
-Bash
-npx prisma generate 
-(Dica: Caso ocorra o erro PrismaClientInitializationError no Windows, adicione binaryTargets = ["native", "windows"] no seu schema.prisma e rode npx.cmd prisma generate)
-
-Inicie o servidor em modo de desenvolvimento:
-
-Bash
-npm run dev  
-O servidor backend estará rodando na porta padrão (geralmente http://localhost:3333). Pode testar a rota de criação no Insomnia com um POST enviando no Body JSON:
-
-JSON
-{
-  "name": "Nome do Teste",
-  "email": "teste@email.com"
-}
-3. Configurando e Executando o Frontend
-Abra um novo terminal e navegue até a pasta do frontend:
-
-Bash
-cd frontend
-Instale as dependências da interface web:
-
-Bash
-npm install
-Inicie o servidor de desenvolvimento do React:
-
-Bash
+**Sincronizar o Prisma e Iniciar o Servidor:**
+```bash
+npx prisma generate
 npm run dev
-A página estará acessível no seu navegador, geralmente através do endereço local http://localhost:5173.
+```
+*O backend estará rodando em `http://localhost:3333`.*
+
+### 3. Configurando o Frontend (Terminal 2)
+Mantenha o terminal do backend aberto. Abra um **novo terminal**, navegue até a pasta do frontend e inicie a aplicação:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+*Acesse a interface no seu navegador através de `http://localhost:5173`.*
+
+---
+
+## ✨ Funcionalidades Implementadas para Teste
+
+Ao abrir a aplicação no navegador, você poderá testar o ciclo completo de vida dos dados (CRUD):
+
+- **Validação de Formulário:** Tente cadastrar um cliente com os campos vazios. O sistema bloqueará o envio, a borda dos campos ficará vermelha e alertas de texto exigindo o preenchimento aparecerão.
+- **Cadastro (POST):** Preencha nome e e-mail e clique em "Cadastrar". O cliente aparecerá instantaneamente na lista abaixo e os campos do formulário serão limpos.
+- **Listagem (GET):** Todos os clientes salvos no banco de dados são carregados automaticamente ao abrir a página.
+- **Edição (PUT):** Clique no botão azul (lápis) em qualquer cartão. Os dados voltarão para o formulário no topo, o botão mudará para "Atualizar Cliente" e um botão "Cancelar" aparecerá. Ao salvar, a lista é atualizada em tempo real.
+- **Exclusão (DELETE):** Clique no botão vermelho (lixeira). O cliente será apagado do banco de dados e removido imediatamente da tela.
+
+---
+
+## 👥 Colaboradores
+- **Autora:** Rebeca Dias
+- **Professor:** Clique33
