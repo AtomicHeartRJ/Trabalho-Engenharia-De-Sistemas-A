@@ -139,7 +139,8 @@ export default function App() {
                     </div>
                 </form>
 
-                <section className="flex flex-col gap-4"> 
+                
+                <section className="flex flex-col gap-4 px-2 pt-4"> 
                     {customers.map((customer) => (
                         <article
                             key={customer.id}
@@ -149,15 +150,17 @@ export default function App() {
                             <p> <span className="font-medium ">Email: </span> {customer.email} </p>
                             <p> <span className="font-medium ">Status: </span> {customer.status ? "ATIVO" : "INATIVO"} </p>
 
+                            
                             <button 
-                                className="bg-blue-500 w-7 h-7 flex items-center justify-center rounded-lg absolute right-10 -top-2"
+                                className="bg-blue-500 w-7 h-7 flex items-center justify-center rounded-lg absolute right-12 -top-2"
                                 onClick={() => handleEdit(customer)}
                             > 
                                 <FiEdit size={18} color="#FFF"/>
                             </button>
 
+                           
                             <button 
-                                className="bg-red-500 w-7 h-7 flex items-center justify-center rounded-lg absolute right-0 -top-2"
+                                className="bg-red-500 w-7 h-7 flex items-center justify-center rounded-lg absolute right-2 -top-2"
                                 onClick={() => handleDelete(customer.id)}
                             > 
                                 <FiTrash size={18} color="#FFF"/>
