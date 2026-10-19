@@ -1,6 +1,6 @@
 # 🚀 Sistema de Gerenciamento de Clientes (Full-Stack)
 
-Este repositório contém uma aplicação Full-Stack completa para o gerenciamento de clientes, estruturada com separação de responsabilidades entre Backend (Node.js/API) e Frontend (React/Interface). 
+Este repositório contém uma aplicação Full-Stack completa para o gerenciamento de clientes, estruturada com separação de responsabilidades entre Backend (Node.js/API) e Frontend (React/Interface).É possível testar a aplicação indo na aba actions e cliclando no link da primeira opção. Será necessário esperar alguns segundos para a página carregar completamente.
 
 O projeto inclui um sistema CRUD completo (Criar, Ler, Atualizar e Deletar) com atualizações em tempo real na interface e validações de usuário.
 
